@@ -16,13 +16,15 @@ thumbnailURL = "https://i.imgur.com/2c6X56V.png"
 channelID = channel-id 
 
 # Author Icons
-default = "https://i.imgur.com/cmXAse2.jpeg"
-irisMemic = "https://i.imgur.com/P3tNbI6.jpg"
-senadRahimic = "https://i.imgur.com/RC1Cthj.jpeg"
-edinaCmanjcanin = "https://i.imgur.com/gZ3DWaU.png"
-elmirBabovic = "https://i.imgur.com/KvsbWXn.png"
-denisMusic = "https://i.imgur.com/WQH2OJh.png"
-indiraHamulic = "https://i.imgur.com/oZ1N2vv.png"
+avatars = {
+    "Iris": "https://i.imgur.com/P3tNbI6.jpg",
+    "Senad": "https://i.imgur.com/RC1Cthj.jpeg",
+    "Edina": "https://i.imgur.com/gZ3DWaU.png",
+    "Elmir": "https://i.imgur.com/KvsbWXn.png",
+    "Denis": "https://i.imgur.com/WQH2OJh.png",
+    "Indira": "https://i.imgur.com/oZ1N2vv.png",
+    "default": "https://i.imgur.com/cmXAse2.jpeg"
+}
 
 class MyClient(discord.Client):
     def __init__(self, *args, **kwargs):
@@ -66,21 +68,11 @@ class MyClient(discord.Client):
             else:
                 embed=discord.Embed(title=data["title"], url=data["article_url"], description=data["content"], color=0xf6f6f6)
 
-            # Please don't look at this code.
-            if "Iris" in data["author"]:
-                icon = irisMemic
-            elif "Senad" in data["author"]:
-                icon = senadRahimic
-            elif "Edina" in data["author"]:
-                icon = edinaCmanjcanin
-            elif "Elmir" in data["author"]:
-                icon = elmirBabovic
-            elif "Denis" in data["author"]:
-                icon = denisMusic
-            elif "Indira" in data["author"]:
-                icon = indiraHamulic
+            author = data["author"].split()[0] # first name of the author
+            if author in avatars:
+                icon = avatars[author]
             else:
-                 icon = default
+                 icon = avatars["default"]
                 
             date = data["date"]
             embed.set_author(name=data["author"], icon_url=icon)
